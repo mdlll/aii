@@ -1,4 +1,5 @@
 # coding: utf-8
+#倒数
 import numpy as np
 import matplotlib.pylab as plt
 
@@ -17,7 +18,7 @@ def tangent_line(f, x):
     print(d)
     y = f(x) - d*x
     return lambda t: d*t + y
-     
+
 x = np.arange(0.0, 20.0, 0.1)
 y = function_1(x)
 plt.xlabel("x")

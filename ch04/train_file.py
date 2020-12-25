@@ -11,39 +11,51 @@ from dataset.mnist import load_mnist
 '''
 4.5.2 的机器学习实现
 '''
+
+
 def cross_entropy_error(y, t):
     # 平均交叉熵函数
     if y.ndim == 1:
         t = t.reshape(1, t.size)
         y = y.reshape(1, y.size)
-    batch_size = y.shape[0] #有几行
+    batch_size = y.shape[0]  # 有几行,也就绑了几个batch
+    # print(np.log(y[np.arange(batch_size), t]+ 1e-7))#但是not hot-one形式的这个有问题，先存疑
     # return -np.sum(np.log(y[np.arange(batch_size), t] + 1e-7)) / batch_size # t的数据非hot-one时候使用这个
-    return -np.sum(t * np.log(y + 1e-7)) / batch_size # t的数据是hot-one时候使用这个
+    return -np.sum(t * np.log(y + 1e-7)) / batch_size  # t的数据是hot-one时候使用这个
+
 
 np.set_printoptions(threshold=sys.maxsize)
 # 读入数据
 (x_train, t_train), (x_test, t_test) = load_mnist(normalize=True, one_hot_label=True)
 # (训练图像, 训练标签), (测试图像, 测试标签)
-#(60000, 784) (60000, 10) (10000, 784) (10000, 10)
+# (60000, 784) (60000, 10) (10000, 784) (10000, 10)
 
 # 抽取10个数据
 train_size = x_train.shape[0]
 batch_size = 10
 batch_mask = np.random.choice(train_size, batch_size)
-x_batch = x_train[batch_mask] #10张处理好的图
-t_batch = t_train[batch_mask] #10个训练标签
+x_batch = x_train[batch_mask]  # 10张处理好的图
+t_batch = t_train[batch_mask]  # 10个训练标签
 
 # y=np.array([[0,1,0.1,0,0,0,0,0,0,0],
 #             [0,0,0.2,0.8,0,0,0,0,0,0]])
 # t=np.array([[0,1,0,0,0,0,0,0,0,0],
 #             [0,0,0,1,0,0,0,0,0,0]])#one-hot
-y = np.array([0.1, 0.05, 0.6, 0.0, 0.05, 0.1, 0.0, 0.1, 0.0, 0.0])
-t = np.array([0, 0, 1, 0, 0, 0, 0, 0, 0, 0])
-print(cross_entropy_error(y,t))
+# y = np.array([0.1, 0.05, 0.6, 0.0, 0.05, 0.1, 0.0, 0.1, 0.0, 0.0])
+# t = np.array([0, 0, 1, 0, 0, 0, 0, 0, 0, 0])
+
+y = np.array(
+    [[0.1, 0.05, 0.6, 0.0, 0.05, 0.1, 0.0, 0.1, 0.0, 0.0], [0.1, 0.05, 0.6, 0.0, 0.05, 0.1, 0.0, 0.1, 0.0, 0.0]])
+t = np.array([[0, 0, 1, 0, 0, 0, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0, 0, 0, 0, 0]])
+
+n = np.arange(10)
+print([n, t])
+print(cross_entropy_error(y, t))
+# print(np.pad(t,((0,0),(0,1)),'constant',constant_values=(0,0))) # 在一个矩阵的前后左右添加行列，可指定数值
 
 
+# print(x_train.shape,t_train.shape,x_test.shape, t_test.shape)
 
-print(x_train.shape,t_train.shape,x_test.shape, t_test.shape)
 '''
 network = TwoLayerNet(input_size=784, hidden_size=50, output_size=10)
 
