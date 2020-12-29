@@ -36,7 +36,7 @@ def numerical_gradient(f, x):
     h = 1e-4  # 0.0001
     grad = np.zeros_like(x)
 
-    it = np.nditer(x, flags=['multi_index'], op_flags=['readwrite'])
+    it = np.nditer(x, flags=['multi_index'], op_flags=['readwrite'])  # 迭代输出器
     while not it.finished:
         # 迭代器
         idx = it.multi_index
@@ -51,4 +51,7 @@ def numerical_gradient(f, x):
         x[idx] = tmp_val  # 还原值
         it.iternext()
 
+    #
     return grad
+
+    # i so fuzzy
