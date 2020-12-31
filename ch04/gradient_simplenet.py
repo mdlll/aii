@@ -31,7 +31,7 @@ t = np.array([0, 0, 1])
 net = simpleNet()
 
 f = lambda w: net.loss(x, t)  # 获得一个虚拟函数，可以激发
-dW = numerical_gradient(f, net.W) #所以这只执行了一轮
+dW = numerical_gradient(f, net.W)  # 这只是求神经网络的梯度值，并非进行循环学习获得新的权重……我理解错误了之前
 
 '''
 f = lambda x:my_test(x)
@@ -39,7 +39,5 @@ f = lambda x:my_test(x)
 def f(x):
 	return my_test(x)
 '''
-print(np.dot(x,net.W))
-print(np.dot(x, dW))
-print(net.W, net.a)  # 更加优秀的权重值
+print(net.W)
 print(dW)
