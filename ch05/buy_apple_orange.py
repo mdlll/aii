@@ -1,5 +1,5 @@
 # coding: utf-8
-from layer_naive import *
+from ch05.layer_naive import *
 
 apple = 100
 apple_num = 2
@@ -14,10 +14,16 @@ add_apple_orange_layer = AddLayer()
 mul_tax_layer = MulLayer()
 
 # forward
-apple_price = mul_apple_layer.forward(apple, apple_num)  # (1)
-orange_price = mul_orange_layer.forward(orange, orange_num)  # (2)
-all_price = add_apple_orange_layer.forward(apple_price, orange_price)  # (3)
-price = mul_tax_layer.forward(all_price, tax)  # (4)
+apple_price = mul_apple_layer.forward(apple, apple_num)  # (1) apple x apple_num
+orange_price = mul_orange_layer.forward(orange, orange_num)  # (2) orange x orange_num
+all_price = add_apple_orange_layer.forward(apple_price, orange_price)  # (3) orangePrince+applePrince
+price = mul_tax_layer.forward(all_price, tax)  # (4) allPrice x tax
+
+# backward me
+backprice = 1
+backallprice =
+backtax =  # rollback (x, y)=(all_price, tax)
+
 
 # backward
 dprice = 1
@@ -26,7 +32,7 @@ dapple_price, dorange_price = add_apple_orange_layer.backward(dall_price)  # (3)
 dorange, dorange_num = mul_orange_layer.backward(dorange_price)  # (2)
 dapple, dapple_num = mul_apple_layer.backward(dapple_price)  # (1)
 
-print("price:", int(price))
+# print("price:", int(price))
 print("dApple:", dapple)
 print("dApple_num:", int(dapple_num))
 print("dOrange:", dorange)

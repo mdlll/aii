@@ -14,7 +14,7 @@ class MulLayer:
         return out
 
     def backward(self, dout):
-        dx = dout * self.y
+        dx = dout * self.y  # 翻转x和y的位置
         dy = dout * self.x
 
         return dx, dy
@@ -34,3 +34,21 @@ class AddLayer:
         dy = dout * 1
 
         return dx, dy
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -34,31 +34,35 @@ y = np.array(
     [[0.1, 0.05, 0.6, 0.0, 0.05, 0.1, 0.0, 0.1, 0.0, 0.0], [0.1, 0.05, 0.6, 0.0, 0.05, 0.1, 0.0, 0.1, 0.0, 0.0]])
 t = np.array([[0, 0, 1, 0, 0, 0, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0, 0, 0, 0, 0]])
 # print(np.pad(t,((0,0),(0,1)),'constant',constant_values=(0,0))) # 在一个矩阵的前后左右添加行列，可指定数值
+#
+# # 同样的内容怎么这么慢？
+# network = TwoLayerNet(input_size=784, hidden_size=50, output_size=10)
+# learn_num = 0.01
+# train_num = 1000  # design train times
+# train_loss = []  # recoder loss change
+# train_size = x_train.shape[0]
+# batch_size = 10
+# for i in range(train_num):
+#     # 抽取10个数据
+#     batch_mask = np.random.choice(train_size, batch_size)
+#     x_batch = x_train[batch_mask]  # 10张处理好的图
+#     t_batch = t_train[batch_mask]  # 10个训练标签
+#     # 计算梯度
+#     grad = network.numerical_gradient(x_batch, t_batch)
+#     # 按照梯度方向更新
+#     for key in ('W1', 'b1', 'W2', 'b2'):
+#         network.params[key] -= learn_num * grad[key]
+#     # 计算损失函数
+#     loss = network.loss(x_batch, t_batch)
+#     train_loss.append(loss)
+#     print(loss)
+# print(train_loss)
+# # 正向计算和反向计算图
+# # 反向传播求导
+# # 通过计算图，节点位置为： A → (x2) → 2A → (x1.1) → 2.2A 正向传播
+# # 反向：             2.2 ← (x2) ← 1.1 ← (x1.1) ← 1 反向传播主要是，在结果处设置1，然后反向求，得到的2.2含义是，当A增加一个微小值ETA，则总数会增加2.2ETA，这就是导数
 
-# 同样的内容怎么这么慢？
-network = TwoLayerNet(input_size=784, hidden_size=50, output_size=10)
-learn_num = 0.01
-train_num = 1000  # design train times
-train_loss = []  # recoder loss change
-train_size = x_train.shape[0]
-batch_size = 10
-for i in range(train_num):
-    # 抽取10个数据
-    batch_mask = np.random.choice(train_size, batch_size)
-    x_batch = x_train[batch_mask]  # 10张处理好的图
-    t_batch = t_train[batch_mask]  # 10个训练标签
-    # 计算梯度
-    grad = network.numerical_gradient(x_batch, t_batch)
-    # 按照梯度方向更新
-    for key in ('W1', 'b1', 'W2', 'b2'):
-        network.params[key] -= learn_num * grad[key]
-    # 计算损失函数
-    loss = network.loss(x_batch, t_batch)
-    train_loss.append(loss)
-    print(loss)
-print(train_loss)
 
-'''
 network = TwoLayerNet(input_size=784, hidden_size=50, output_size=10)
 
 iters_num = 10000  # 适当设定循环的次数
@@ -86,7 +90,10 @@ for i in range(iters_num):
 
     loss = network.loss(x_batch, t_batch)
     train_loss_list.append(loss)
+    print(loss)
 
+
+'''
     # if i % iter_per_epoch == 0:
     #     train_acc = network.accuracy(x_train, t_train)
     #     test_acc = network.accuracy(x_test, t_test)
